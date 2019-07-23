@@ -4,7 +4,7 @@ import MovieCard from "./MovieCard.js"
 
 const Movie = (props) => {
   const [movie, setMovie] = useState(null);
-  const [saveMovie, setSaveMovie] = useState(false)
+  
   // need to put null here because {} would cause an error in code.
   // Null explicitly states that it is empty while an empty useState or an empty object in useState may not be clear.
   console.log(props)
@@ -23,14 +23,10 @@ const Movie = (props) => {
 
   },[props.match.params.id]);
   
-  useEffect(() => {
-    if(saveMovie===true) {
-      const addToSavedList = props.addToSavedList;
-      console.log("Working?", movie)
-      return addToSavedList(movie)
-    }
-    return
-  }, [saveMovie])
+  const saveMovie = () => {
+    const addToSavedList = props.addToSavedList;
+    addToSavedList(movie)
+  }
 
   if (!movie) {
     return <div>Loading movie information...</div>;
@@ -40,7 +36,7 @@ const Movie = (props) => {
   return (
     <div className="save-wrapper">
       <MovieCard key={movie.id} movie={movie}/>
-      <div onClick={() => setSaveMovie(true)} className="save-button">Save</div>
+      <div onClick={saveMovie} className="save-button">Save</div>
     </div>
   );
 }
