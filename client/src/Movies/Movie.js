@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import MovieCard from "./Movies/MovieCard.js";
 
 const Movie = (props) => {
   const [movie, setMovie] = useState(null);
-  //need to put null here because {} would cause an error in code.
-  // Null explicitly states that it is empty while an empty useState may not be clear.
+  // need to put null here because {} would cause an error in code.
+  // Null explicitly states that it is empty while an empty useState or an empty object in useState may not be clear.
   console.log(props)
  
   useEffect(() => {
@@ -22,7 +23,7 @@ const Movie = (props) => {
           console.error(error);
         });
 
-  },[]);
+  },[props.match.params.id]);
   
   // Uncomment this only when you have moved on to the stretch goals
   // const saveMovie = () => {
@@ -35,26 +36,9 @@ const Movie = (props) => {
   }
   console.log(movie);
 
-  const { title, director, metascore, stars } = movie;
   return (
     <div className="save-wrapper">
-      <div className="movie-card">
-        <h2>{title}</h2>
-        <div className="movie-director">
-          Director: <em>{director}</em>
-        </div>
-        <div className="movie-metascore">
-          Metascore: <strong>{metascore}</strong>
-        </div>
-        <h3>Actors</h3>
-
-        {stars.map(star => (
-          <div key={star} className="movie-star">
-            {star}
-          </div>
-        ))}
-      </div>
-      <div className="save-button">Save</div>
+      <MovieCard key={movie.id} movie={movie}/>
     </div>
   );
 }
